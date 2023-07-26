@@ -9,9 +9,11 @@
     
 
     <ul>
-        <% users.forEach((users) =>{%>
+        <% users.forEach((user) =>{%>
         <li>
-            <%= users.name%> - <%= users.email%> - Idade: <%= users.age%>
+            <%= user.name%> - <%= user.email%> - Idade: <%= user.age%> -
+            <a href="/edit?id=<%= user._id%>">[Editar]</a> - 
+            <a href="/remove/<%= user._id%>">[Excluir]</a>
         </li>    
         <%})%>
     </ul>

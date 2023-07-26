@@ -33,18 +33,76 @@ async function add(req, res){
     })
 }
 
-async function listUsers(req, res) {
+async function list(req, res) {
 
     const users = await CustomersModel.find()
 
-    res.render('listUsers', {
+    res.render('list', {
         title:'Lista Usuários',
         users,
     })
 }
 
+async function formEdit(req, res) {
+
+    // console.log(req.query.id)
+
+    const id = req.query.id
+
+    const user = await CustomersModel.findById(id)
+
+    res.render('edit', {
+        title: 'Editar Usuário',
+        user,
+    })
+}
+
+async function edit(req, res) {
+    const{
+        name,
+        age,
+        email,
+    } = req.body
+
+    const id = req.params.id
+
+    // console.log(id)
+
+    const user = await CustomersModel.findById(id)
+
+    user.name = name
+    user.age = age
+    user.email = email
+
+    user.save()
+
+    res.render('edit', {
+        title: 'Editar Usuário',
+        user,
+        message:`Usuário "${name}" editado com sucesso!!`
+    })
+
+}
+
+async function remove(req, res) {
+    // console.log(req.params)
+
+    const id = req.params.id
+
+    const remove = await CustomersModel.deleteOne({ _id: id })
+
+    console.log(remove)
+
+    if (remove.deletedCount === 1) {
+        res.redirect('/list')
+    }
+}
+
 module.exports = {
     add,
     index,
-    listUsers,
+    list,
+    formEdit,
+    edit,
+    remove,
 }
