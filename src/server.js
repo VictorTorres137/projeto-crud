@@ -1,28 +1,14 @@
 const express = require('express')
 const path = require('path')
 
-
-
 const routes = require('./routes')
 const db = require('./database')
 const internal = require('stream')
 
 const app = express()
 
-
-
 //conecção com banco de dados
-db.conect()
-
-
-// const register = new Model({
-//     name: 'Victor',
-//     age: 26,
-//     email: 'victor@email.com',
-//     password: 1233456
-// })
-
-// register.save()
+db.connect()
 
 //definindo template engine
 app.set('view engine','ejs')
@@ -38,7 +24,7 @@ app.use(express.urlencoded({ extended: true}))
 //definindo rotas
 app.use('/', routes)
 
-
+// Erro Pagina Não encontrada 404
 app.use((req, res) => {
     res.send('Pagina não encontrada!')
 })
